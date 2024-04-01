@@ -8,13 +8,8 @@ class Pet < ApplicationRecord
 
   # Relationships
   # -----------------------------
-  belongs_to :animal
   belongs_to :owner
   has_many :visits
-  has_many :dosages, through: :visits
-  has_many :treatments, through: :visits
-  # has_many :notes, as: :notable
-
 
   # Scopes
   # -----------------------------
@@ -36,12 +31,10 @@ class Pet < ApplicationRecord
 
   # get all the pets for a particular owner
   scope :for_owner, ->(owner_id) { where("owner_id = ?", owner_id) }
-  # get all the pets who are a particular animal type
-  scope :by_animal, ->(animal_id) { where("animal_id = ?", animal_id) }
   # get all the pets born before a certain date
   scope :born_before, ->(dob) { where('date_of_birth < ?', dob) }
   # find all pets that have a name like some term or are and animal like some term
-  scope :search, ->(term) { joins(:animal).where('pets.name LIKE ?', "#{term}%").order("pets.name") }
+  scope :search, ->(term) { where('pets.name LIKE ?', "#{term}%").order("pets.name") }
 
 
   # Validations
@@ -52,8 +45,6 @@ class Pet < ApplicationRecord
   #
   # First, make sure a name exists
   validates :name, presence: true
-  # Second, make sure the animal is one of the types PATS treats
-  validate :animal_type_treated_by_PATS
   # Third, make sure the owner_id is in the PATS system 
   validate :owner_is_active_in_PATS_system
   
@@ -68,10 +59,6 @@ class Pet < ApplicationRecord
   # Use private methods to execute the custom validations
   # -----------------------------
   private
-  def animal_type_treated_by_PATS
-    is_active_in_system(:animal)
-  end
-  
   def owner_is_active_in_PATS_system
     is_active_in_system(:owner)
   end

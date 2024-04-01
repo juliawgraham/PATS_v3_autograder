@@ -1,5 +1,16 @@
 require 'simplecov'
-SimpleCov.start 'rails'
+SimpleCov.start 'rails' do
+  add_filter "lib/tasks/"
+  add_filter "lib/helpers/"
+  add_filter "lib/filters/"
+  add_filter "lib/exceptions.rb"
+  add_filter "app/channels/application_cable/"
+  add_filter "app/jobs/"
+  add_filter "app/mailers/"
+  add_filter "app/helpers/"
+  add_filter "app/controllers/"
+  add_filter "app/controllers/api/"
+end
 ENV["RAILS_ENV"] = "test"
 require File.expand_path("../../config/environment", __FILE__)
 require "rails/test_help"

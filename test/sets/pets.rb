@@ -2,9 +2,9 @@ module Contexts
   module Pets
 
     def create_pets
-      @dusty = FactoryBot.create(:pet, animal: @cat, owner: @alex, female: false)
-      @polo = FactoryBot.create(:pet, animal: @cat, owner: @alex, name: "Polo", active: false)
-      @pork_chop = FactoryBot.create(:pet, animal: @dog, owner: @mark, name: "Pork Chop")
+      @dusty = FactoryBot.create(:pet, owner: @alex, female: false)
+      @polo = FactoryBot.create(:pet, owner: @alex, name: "Polo", active: false)
+      @pork_chop = FactoryBot.create(:pet, owner: @mark, name: "Pork Chop")
     end
     
     def destroy_pets

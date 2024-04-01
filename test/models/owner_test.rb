@@ -118,16 +118,5 @@ class OwnerTest < ActiveSupport::TestCase
       assert_equal "4122688211", @mark.phone
     end
     
-    should "reactive user if owner is made active" do
-      deny @rachel.active
-      deny @rachel_user.active
-      @rachel.make_active
-      @rachel.reload
-      @rachel_user.reload
-      assert @rachel.active
-      assert @rachel_user.active
-    end
-    
-    
   end
 end

@@ -4,14 +4,10 @@ class Owner < ApplicationRecord
   include Activeable::InstanceMethods
   extend Activeable::ClassMethods
 
-  attr_accessor :username, :password, :password_confirmation
-    
   # Relationships
   # -----------------------------
   has_many :pets # :dependent => :destroy  (:nullify option will break link, but leaves orphan records)
   has_many :visits, through: :pets
-  # has_many :notes, as: :notable
-  belongs_to :user
   
   
   # Scopes
@@ -60,28 +56,9 @@ class Owner < ApplicationRecord
     first_name + " " + last_name
   end
 
-  # Delegates
-  delegate :username, to: :user, allow_nil: true
-  
   # Callbacks
   # create a callback that will strip non-digits before saving to db
   before_save :reformat_phone
-
-  # convert destroy call to make inactive
-  after_rollback :deactive_owner_user_and_pets
-
-  # a final callback to reactivate user account if owner is made active
-  before_update do
-    if self.active && !self.user.active
-      self.user.make_active
-    end
-  end
-
-  def deactive_owner_user_and_pets
-    self.pets.each{ |pet| pet.make_inactive }
-    self.user.make_inactive
-    self.make_inactive
-  end
   
    private
      # We need to strip non-digits before saving to db

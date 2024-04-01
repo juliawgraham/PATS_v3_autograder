@@ -3,9 +3,6 @@ require 'test_helper'
 class VisitTest < ActiveSupport::TestCase
   # Relationship macros...
   should belong_to(:pet)
-  should have_many(:dosages)
-  should have_many(:treatments)
-  should have_one(:animal).through(:pet)
   should have_one(:owner).through(:pet)
   
   # Validation macros...
@@ -36,7 +33,6 @@ class VisitTest < ActiveSupport::TestCase
   context "Given context" do
     # create the objects I want with factories
     setup do 
-      create_animals
       create_owners
       create_pets
       create_visits
@@ -46,7 +42,6 @@ class VisitTest < ActiveSupport::TestCase
     teardown do
       destroy_visits
       destroy_pets
-      destroy_animals
       destroy_owners
     end
     

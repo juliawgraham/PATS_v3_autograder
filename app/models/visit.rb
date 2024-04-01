@@ -2,11 +2,7 @@ class Visit < ApplicationRecord
   # Relationships
   # -----------------------------
   belongs_to :pet
-  has_one :animal, through: :pet
-  has_many :dosages
-  has_many :treatments
   has_one :owner, through: :pet
-  # has_many :notes, as: :notable
   
   
   # Scopes
