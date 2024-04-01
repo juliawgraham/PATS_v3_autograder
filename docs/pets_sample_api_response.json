@@ -1,0 +1,28 @@
+// http://localhost:3000/v1/pets
+
+{
+    "data": [
+      {
+        "id": "1",
+        "type": "pet",
+        "attributes": {
+          "name": "Dusty",
+          "active": true,
+          "date_of_birth": "2014-04-01",
+          "female": "No",
+          "animal": "Cat"
+        }
+      },
+      {
+        "id": "3",
+        "type": "pet",
+        "attributes": {
+          "name": "Pork Chop",
+          "active": true,
+          "date_of_birth": "2014-04-01",
+          "female": "Yes",
+          "animal": "Dog"
+        }
+      }
+    ]
+}
