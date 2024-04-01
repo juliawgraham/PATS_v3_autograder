@@ -36,6 +36,8 @@ gem 'rack', '>= 2.0.6'
 gem 'loofah', '>= 2.2.3'
 gem 'rails-html-sanitizer', '>= 1.0.4'
 
+# For serializing models to json for the API
+gem 'fast_jsonapi', '1.5'
 
 # Other gems
 gem 'chronic', '0.10.2'

@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  # API routing
+  scope module: 'api', defaults: {format: 'json'} do
+    namespace :v1 do
+      # provide the routes for the API here
+      get 'pets', to: 'pets#index', as: :pets
+    end
+  end
+
   # Semi-static page routes
   get 'home', to: 'home#index', as: :home
   get 'home/about', to: 'home#about', as: :about
