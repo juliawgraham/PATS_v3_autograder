@@ -12,6 +12,7 @@ class CreateOwners < ActiveRecord::Migration[5.1]
       t.boolean :active, default: true
       t.string :username
       t.string :password_digest
+      t.integer :role
 
       # t.timestamps
     end

@@ -13,6 +13,7 @@ FactoryBot.define do
     username "alex"
     password "secret"
     password_confirmation "secret"
+    role "client"
   end
 
   factory :animal do

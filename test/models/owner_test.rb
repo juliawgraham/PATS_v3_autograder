@@ -60,6 +60,10 @@ class OwnerTest < ActiveSupport::TestCase
 
   should validate_presence_of(:username)
   should validate_uniqueness_of(:username).case_insensitive
+
+  # Validating role...
+  should allow_value("worker").for(:role)
+  should allow_value("client").for(:role)
   
   # ---------------------------------
   # Testing other methods with a context
@@ -130,6 +134,13 @@ class OwnerTest < ActiveSupport::TestCase
       # try to switch to Becca's username 'becca'
       @alex.username = "RACHEL"
       deny @alex.valid?, "#{@alex.username}"
+    end
+
+    should "have role methods and recognize all three roles" do
+      assert @alex.client?
+      deny @alex.worker?
+      assert @mark.worker?
+      deny @mark.client?
     end
 
     should "allow user to authenticate with password" do

@@ -10,7 +10,9 @@ class Owner < ApplicationRecord
   # -----------------------------
   has_many :pets # :dependent => :destroy  (:nullify option will break link, but leaves orphan records)
   has_many :visits, through: :pets
-  
+
+   # enums
+   enum :role, { client: 1, worker: 2}, scopes: true, default: :owner
   
   # Scopes
   # -----------------------------

@@ -28,6 +28,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_12_30_022308) do
     t.boolean "active", default: true
     t.string "username"
     t.string "password_digest"
+    t.integer "role"
   end
 
   create_table "pets", force: :cascade do |t|

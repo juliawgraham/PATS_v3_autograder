@@ -3,6 +3,7 @@ require './test/sets/owners'
 require './test/sets/animals'
 require './test/sets/pets'
 require './test/sets/visits'
+require './test/sets/abilities'
 
 module Contexts
   # explicitly include all sets of contexts used for testing 
@@ -10,6 +11,7 @@ module Contexts
   include Contexts::Animals
   include Contexts::Pets
   include Contexts::Visits
+  include Contexts::Abilities
   
   def create_all
     create_owners
@@ -20,6 +22,8 @@ module Contexts
     puts "Built pets"
     create_visits
     puts "Built visits"
+    create_abilities
+    puts "Built abilities"
   end
   
 end
