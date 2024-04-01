@@ -14,6 +14,11 @@ FactoryBot.define do
     password "secret"
     password_confirmation "secret"
   end
+
+  factory :animal do
+    name "Cat"
+    active true
+  end
   
   factory :pet do
     name "Dusty"

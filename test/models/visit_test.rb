@@ -34,6 +34,7 @@ class VisitTest < ActiveSupport::TestCase
     # create the objects I want with factories
     setup do 
       create_owners
+      create_animals
       create_pets
       create_visits
     end
@@ -42,6 +43,7 @@ class VisitTest < ActiveSupport::TestCase
     teardown do
       destroy_visits
       destroy_pets
+      destroy_animals
       destroy_owners
     end
     

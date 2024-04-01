@@ -4,6 +4,7 @@ class PetTest < ActiveSupport::TestCase
   # Start by using ActiveRecord macros
   # Relationship macros...
   should belong_to(:owner)
+  should belong_to(:animal)
   should have_many(:visits)
   
   # Validation macros...
@@ -15,6 +16,7 @@ class PetTest < ActiveSupport::TestCase
   context "Given context" do
     # create the objects I want with factories
     setup do 
+      create_animals
       create_owners
       create_pets
     end
@@ -22,13 +24,15 @@ class PetTest < ActiveSupport::TestCase
     # and provide a teardown method as well
     teardown do
       destroy_pets
+      destroy_animals
       destroy_owners
     end
   
     # now run the tests:
     # test one of each type of factory (not really required, but not a bad idea)
-    should "show that owner and pet is created properly" do
+    should "show that cat, owner, pet is created properly" do
       assert_equal "Mark", @mark.first_name
+      assert_equal "Dog", @dog.name
       assert_equal "Pork Chop", @pork_chop.name     
     end
     
@@ -60,6 +64,12 @@ class PetTest < ActiveSupport::TestCase
       assert_equal 2, Pet.for_owner(@alex.id).size
     end    
     
+    # test the scope 'by_animal'
+    should "have a scope by_animal that works" do
+      assert_equal 1, Pet.by_animal(@dog.id).size
+      assert_equal 2, Pet.by_animal(@cat.id).size
+    end
+    
     # test the scope 'search'
     should "shows that search for pets works" do
       assert_equal 2, Pet.search("Po").size
@@ -73,11 +83,20 @@ class PetTest < ActiveSupport::TestCase
       assert_equal "Male", @dusty.gender
     end
     
+    # test the custom validation 'animal_type_treated_by_PATS'
+    should "identify a non-PATS animal type as invalid" do
+      # using 'build' instead of 'create' so not added to db; animal will not be in the system (only in memory)
+      @turtle = FactoryBot.build(:animal, name: "Turtle")
+      turtle_pet = FactoryBot.build(:pet, animal: @turtle, owner: @mark, name: "Surfer")
+      deny turtle_pet.valid?
+      # we've created plenty of valid pets earlier, so not testing the validation allows good cases here...
+    end
+    
     # test the custom validation 'owner_is_active_in_PATS_system'
     should "identify a non-active PATS owner as invalid" do
       # remembering that Rachel is an inactive owner, let's build her pet in memory only (if we use
       # 'FactoryBot.create' we will get a validation error and the test will stop prematurely.)
-      inactive_owner = FactoryBot.build(:pet, owner: @rachel, name: "Daisy")
+      inactive_owner = FactoryBot.build(:pet, animal: @dog, owner: @rachel, name: "Daisy")
       deny inactive_owner.valid?
       # again we've created plenty of valid pets earlier, so only testing the bad cases here...
     end

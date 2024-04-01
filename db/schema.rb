@@ -11,6 +11,11 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2017_12_30_022308) do
+  create_table "animals", force: :cascade do |t|
+    t.string "name"
+    t.boolean "active", default: true
+  end
+
   create_table "owners", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -27,10 +32,12 @@ ActiveRecord::Schema[7.0].define(version: 2017_12_30_022308) do
 
   create_table "pets", force: :cascade do |t|
     t.string "name"
+    t.integer "animal_id"
     t.integer "owner_id"
     t.boolean "female"
     t.date "date_of_birth"
     t.boolean "active", default: true
+    t.index ["animal_id"], name: "index_pets_on_animal_id"
     t.index ["owner_id"], name: "index_pets_on_owner_id"
   end
 
@@ -43,6 +50,7 @@ ActiveRecord::Schema[7.0].define(version: 2017_12_30_022308) do
     t.index ["pet_id"], name: "index_visits_on_pet_id"
   end
 
+  add_foreign_key "pets", "animals"
   add_foreign_key "pets", "owners"
   add_foreign_key "visits", "pets"
 end
