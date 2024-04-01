@@ -54,6 +54,12 @@ class OwnerTest < ActiveSupport::TestCase
   should_not allow_value("bad").for(:state)
   should_not allow_value(10).for(:state)
   should_not allow_value("CA").for(:state)
+
+  # Validating username/password...
+  should have_secure_password
+
+  should validate_presence_of(:username)
+  should validate_uniqueness_of(:username).case_insensitive
   
   # ---------------------------------
   # Testing other methods with a context
@@ -116,6 +122,41 @@ class OwnerTest < ActiveSupport::TestCase
     # test the callback is working 'reformat_phone'
     should "shows that Mark's phone is stripped of non-digits" do
       assert_equal "4122688211", @mark.phone
+    end
+
+    should "require users to have unique, case-insensitive usernames" do
+      # already test on line 8, but doing it long way here
+      assert_equal "alex", @alex.username
+      # try to switch to Becca's username 'becca'
+      @alex.username = "RACHEL"
+      deny @alex.valid?, "#{@alex.username}"
+    end
+
+    should "allow user to authenticate with password" do
+      assert @alex.authenticate("secret")
+      deny @alex.authenticate("notsecret")
+    end
+
+    should "require a password for new users" do
+      bad_user = FactoryBot.build(:owner, first_name: "bad", username: "tank", password: nil)
+      deny bad_user.valid?
+    end
+    
+    should "require passwords to be confirmed and matching" do
+      bad_user_1 = FactoryBot.build(:owner, first_name: "bad1", username: "tank", password: "secret", password_confirmation: nil)
+      deny bad_user_1.valid?
+      bad_user_2 = FactoryBot.build(:owner, first_name: "bad2", username: "tank", password: "secret", password_confirmation: "sauce")
+      deny bad_user_2.valid?
+    end
+    
+    should "require passwords to be at least four characters" do
+      bad_user = FactoryBot.build(:owner, first_name: "bad", username: "tank", password: "no")
+      deny bad_user.valid?
+    end
+
+    should "have class method to handle authentication services" do
+      assert Owner.authenticate('alex', 'secret')
+      deny Owner.authenticate('alex', 'notsecret')
     end
     
   end

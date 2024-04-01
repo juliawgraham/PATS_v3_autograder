@@ -4,6 +4,8 @@ class Owner < ApplicationRecord
   include Activeable::InstanceMethods
   extend Activeable::ClassMethods
 
+  has_secure_password
+
   # Relationships
   # -----------------------------
   has_many :pets # :dependent => :destroy  (:nullify option will break link, but leaves orphan records)
@@ -43,6 +45,12 @@ class Owner < ApplicationRecord
   # if not limited to the three states, it might be better (but slightly slower) to write:
   # validates_inclusion_of :state, in: STATES_LIST.map {|key, value| value}, message: "is not an option", allow_blank: true
   
+  validates :username, presence: true, uniqueness: { case_sensitive: false }
+  validates_presence_of :password, :on => :create 
+  validates_presence_of :password_confirmation, :on => :create 
+  validates_confirmation_of :password, message: "does not match"
+  validates_length_of :password, :minimum => 4, message: "must be at least 4 characters long", :allow_blank => true
+  
 
   # Other methods
   # -------------
@@ -56,6 +64,10 @@ class Owner < ApplicationRecord
     first_name + " " + last_name
   end
 
+  def self.authenticate(username, password)
+    find_by_username(username).try(:authenticate, password)
+  end
+
   # Callbacks
   # create a callback that will strip non-digits before saving to db
   before_save :reformat_phone
@@ -64,7 +76,7 @@ class Owner < ApplicationRecord
      # We need to strip non-digits before saving to db
      def reformat_phone
        phone = self.phone.to_s  # change to string in case input as all numbers 
-       phone.gsub!(/[^0-9]/,"") # strip all non-digits
+       phone = phone.gsub(/[^0-9]/,"") # strip all non-digits
        self.phone = phone       # reset self.phone to new string
      end
 

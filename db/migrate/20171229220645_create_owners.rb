@@ -10,6 +10,8 @@ class CreateOwners < ActiveRecord::Migration[5.1]
       t.string :phone
       t.string :email
       t.boolean :active, default: true
+      t.string :username
+      t.string :password_digest
 
       # t.timestamps
     end

@@ -10,6 +10,9 @@ FactoryBot.define do
     active true
     phone { rand(10 ** 10).to_s.rjust(10,'0') }
     email { |a| "#{a.first_name}.#{a.last_name}@example.com".downcase }
+    username "alex"
+    password "secret"
+    password_confirmation "secret"
   end
   
   factory :pet do
