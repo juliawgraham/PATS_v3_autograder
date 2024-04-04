@@ -4,7 +4,6 @@ module Contexts
         @worker = FactoryBot.create(:owner, first_name: "worker", username: "worker", role: "worker")
         @worker_ability = Ability.new(@worker)
 
-        create_owners
         @alex_ability = Ability.new(@alex)
         @chris = FactoryBot.create(:owner, first_name: "chris", username: "chris", role: "client")
         @chris_ability = Ability.new(@chris)
