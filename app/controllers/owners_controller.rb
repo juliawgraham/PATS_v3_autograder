@@ -45,8 +45,8 @@ class OwnersController < ApplicationController
     end
   
     def destroy
-      ## We don't allow destroy (will deactivate instead)
-      @owner.deactive_owner_and_pets
+      @owner.pets.each{ |pet| pet.make_inactive }
+      @owner.make_inactive
       redirect_to owners_url, notice: "Successfully deactivated #{@owner.proper_name} along with associated pets."
     end
   

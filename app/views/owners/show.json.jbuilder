@@ -1,1 +1,1 @@
-json.partial! "owners/owner", owner: @owner
+# json.partial! "owners/owner", owner: @owner

@@ -8,7 +8,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create session with proper creds" do
-    login_vet
+    login_worker
     assert_not_nil session[:user_id]
     assert_redirected_to home_path
   end
@@ -20,7 +20,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy session" do
-    login_vet
+    login_worker
     assert_not_nil session[:user_id]
     get logout_path
     assert_nil session[:user_id]

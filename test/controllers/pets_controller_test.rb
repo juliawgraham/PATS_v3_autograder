@@ -8,13 +8,13 @@ class PetsControllerTest < ActionDispatch::IntegrationTest
     @pet    = FactoryBot.create(:pet, owner: @owner, animal: @animal)
   end
 
-  test "should get index for vet" do
+  test "should get index for worker" do
     get pets_path
     assert_response :success
   end
   
-  test "should get index for owner" do
-    login_owner
+  test "should get index for client" do
+    login_client
     get pets_path
     assert_response :success
   end

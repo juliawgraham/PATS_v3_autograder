@@ -3,9 +3,9 @@ class SessionsController < ApplicationController
     end
     
     def create
-      user = User.authenticate(params[:username], params[:password])
-      if user
-        session[:user_id] = user.id
+      owner = Owner.authenticate(params[:username], params[:password])
+      if owner
+        session[:user_id] = owner.id
         redirect_to home_path, notice: "Logged in!"
       else
         flash.now.alert = "Username and/or password is invalid"

@@ -35,23 +35,16 @@ class ActiveSupport::TestCase
   end
 
   # A set methods to login various types of users (for controller tests)
-  def login_vet
-    @vet = FactoryBot.create(:user, first_name: "Ted", username: "ted", role: "vet")
+  def login_client
+    @owner = FactoryBot.create(:owner, first_name: "Ted", username: "ted", role: "client")
     get login_path
     post sessions_path, params: { username: "ted", password: "secret" }
   end
   
-  def login_assistant
-    @assistant = FactoryBot.create(:user, first_name: "Pa", username: "grape", role: "assistant")
+  def login_worker
+    @owner = FactoryBot.create(:owner, first_name: "Pam", username: "pam", role: "worker")
     get login_path
-    post sessions_path, params: { username: "grape", password: "secret" }
-  end
-  
-  def login_owner
-    @owner_user = FactoryBot.create(:user, first_name: "Ned", username: "ned", role: "owner")
-    @logged_in_owner = FactoryBot.create(:owner, user: @owner_user, first_name: "Ned")
-    get login_path
-    post sessions_path, params: { username: "ned", password: "secret" }
+    post sessions_path, params: { username: "pam", password: "secret" }
   end
 
   # Spruce up minitest results...
