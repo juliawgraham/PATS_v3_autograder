@@ -7,7 +7,7 @@ class PetsController < ApplicationController
   
     def index
       # get data on all pets and paginate the output to 10 per page
-      if current_user.client?
+      if current_user.client_role?
         @active_pets = current_user.pets.active.alphabetical.paginate(page: params[:page]).per_page(10)
         @inactive_pets = current_user.pets.inactive.alphabetical.paginate(page: params[:page]).per_page(10)
       else

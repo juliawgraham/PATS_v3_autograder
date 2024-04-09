@@ -12,7 +12,8 @@ class Owner < ApplicationRecord
   has_many :visits, through: :pets
 
    # enums
-   enum :role, { client: 1, worker: 2}, scopes: true, default: :owner
+   enum :role, { client: 1, worker: 2}, scopes: true, default: :owner, suffix: true
+   ROLES = [['Client', 'client'],['Worker', 'worker']].freeze
   
   # Scopes
   # -----------------------------

@@ -18,7 +18,7 @@ Given /^no setup yet$/ do
 end
 
 Given /^a logged in user$/ do
-  @vet = FactoryBot.create(:user, first_name: "Ted", username: "ted", role: "vet")
+  @owner = FactoryBot.create(:owner, first_name: "Ted", username: "ted", role: "worker")
   visit login_path
   fill_in('username', :with => "ted")
   fill_in('password', :with => "secret")

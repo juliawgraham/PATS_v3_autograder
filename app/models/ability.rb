@@ -6,11 +6,11 @@ class Ability
       user ||= Owner.new # i.e., a guest user
       
       # set authorizations for different user roles
-      if user.worker?
+      if user.worker_role?
         # they get to do it all
         can :manage, :all
 
-      elsif user.client?
+      elsif user.client_role?
         # they can read their own data
         can :show, Owner do |this_owner|  
           user == this_owner

@@ -12,16 +12,15 @@
           <%= f.input :zip, label_html: { class: 'active' } %>
           <%= f.input :phone, label_html: { class: 'active' } %>
           <%= f.input :email, label_html: { class: 'active' } %>
+          <%= f.input :role, collection: Owner::ROLES, include_blank: true %>
+          <%= f.input :username, label_html: { class: 'active' } %>
+          <%= f.input :password, label_html: { class: 'active' } %>
+          <%= f.input :password_confirmation, label_html: { class: 'active' } %>
           <%= f.input :active %>
       </div>
     </div>
   </div>
 </div>
-  <div class="row">
-    <div class="col s12">
-      <%= render :partial => "user_fields", locals: {f: f} %>
-    </div>
-  </div>
   <div class="row">
     <div class="form-actions col s7">
       <%= f.button :submit %>

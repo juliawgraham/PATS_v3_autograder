@@ -137,10 +137,10 @@ class OwnerTest < ActiveSupport::TestCase
     end
 
     should "have role methods and recognize all three roles" do
-      assert @alex.client?
-      deny @alex.worker?
-      assert @mark.worker?
-      deny @mark.client?
+      assert @alex.client_role?
+      deny @alex.worker_role?
+      assert @mark.worker_role?
+      deny @mark.client_role?
     end
 
     should "allow user to authenticate with password" do

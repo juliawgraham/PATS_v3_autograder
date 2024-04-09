@@ -25,7 +25,7 @@ class OwnersController < ApplicationController
     def create
       @owner = Owner.new(owner_params)
       if @owner.save
-        flash[:notice] = "Successfully created #{@owner.proper_name}."
+        flash[:notice] = "Successfully created #{@owner.proper_name}"
         redirect_to owner_path(@owner) 
       else
         render action: 'new'

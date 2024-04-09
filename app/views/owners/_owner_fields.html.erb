@@ -6,4 +6,8 @@
 <%= f.input :zip, label_html: { class: 'active' } %>
 <%= f.input :phone, label_html: { class: 'active' } %>
 <%= f.input :email, label_html: { class: 'active' } %>
+<%= f.input :role, collection: Owner::ROLES, include_blank: true %>
+<%= f.input :username, label_html: { class: 'active' } %>
+<%= f.input :password, label_html: { class: 'active' } %>
+<%= f.input :password_confirmation, label_html: { class: 'active' } %>
 <%= f.input :active %>

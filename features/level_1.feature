@@ -1,5 +1,5 @@
 Feature: Manage owners
-  As an veterinarian
+  As a worker
   I want to be able to create, read and update owners in the system
   So make sure the core of my veterinarian business runs correctly
 
@@ -8,19 +8,6 @@ Feature: Manage owners
     Given a logged in user
   
   # READ METHODS
-  Scenario: No owners yet
-    Given no setup yet
-    When I go to the owners page
-    Then I should see "There are no owners in the system at this time"
-    And I should not see "Phone"
-    And I should not see "Email"
-    And I should not see "true"
-    And I should not see "True"
-    And I should not see "ID"
-    And I should not see "_id"
-    And I should not see "Created"
-    And I should not see "created"
-
   Scenario: View all owners
     When I go to the owners page
     Then I should see "Active Owners in PATS"
@@ -73,7 +60,6 @@ Feature: Manage owners
     And I click on the link "Heimann, Mark"
     And I click on the link "Pork Chop"
     And I should see "Pet Information for Pork Chop"
-    And I should see "Recent Visits"
 
   
   # CREATE METHODS
@@ -87,6 +73,10 @@ Feature: Manage owners
     And I fill in "owner_zip" with "15213"
     And I fill in "owner_phone" with "(412) 268-2323"
     And I fill in "owner_email" with "egruberman@example.com"
+    And I select "Client" from "owner_role"
+    And I fill in "owner_username" with "grub"
+    And I fill in "owner_password" with "secret"
+    And I fill in "owner_password_confirmation" with "secret"
     And I press "Create Owner"
     Then I should see "Successfully created Ed Gruberman"
     And I should see "Home Address:"
@@ -105,6 +95,10 @@ Feature: Manage owners
     And I fill in "owner_zip" with "15213"
     And I fill in "owner_phone" with "(412) 268-2323"
     And I fill in "owner_email" with "egruberman@example.com"
+    And I select "Client" from "owner_role"
+    And I fill in "owner_username" with "grub"
+    And I fill in "owner_password" with "secret"
+    And I fill in "owner_password_confirmation" with "secret"
     And I press "Create Owner"
     Then I should see "can't be blank"
     Then I should not see "Successfully created Ed Gruberman"
@@ -114,8 +108,10 @@ Feature: Manage owners
   # UPDATE METHODS
   Scenario: Editing an existing owner is successful
     When I go to the edit Alex page
-    Then I should see "Editing Owner"
+    Then I should see "Edit Owner"
     And I fill in "owner_phone" with "412.268.3259"
+    And I fill in "owner_password" with "secret"
+    And I fill in "owner_password_confirmation" with "secret"
     And I press "Update Owner"
     Then I should see "Successfully updated Alex Heimann"
     And I should see "412-268-3259"

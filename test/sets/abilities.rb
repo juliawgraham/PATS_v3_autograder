@@ -1,6 +1,7 @@
 module Contexts
     module Abilities
       def create_abilities
+        create_owners
         @worker = FactoryBot.create(:owner, first_name: "worker", username: "worker", role: "worker")
         @worker_ability = Ability.new(@worker)
 
